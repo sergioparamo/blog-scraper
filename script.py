@@ -46,7 +46,6 @@ def generate_pdf_with_weasyprint(content, year, file_name=None):
 
     html_content += "</body></html>"
     
-    print('html_content', html_content)
     final_soup = BeautifulSoup(html_content, "html.parser")
     HTML(string=str(final_soup)).write_pdf(file_name)
 
@@ -85,16 +84,13 @@ def extract_post_data(post_url):
         date_element = soup.find('time')
         date = date_element.text.strip() if date_element else 'No date'
         
-        print(date)
-
         # Extract the title
         title_element = soup.find('h1', class_='entry-title')
+        title = title_element.text.strip() if title_element else 'No title'
         
-        if not title_element:
-            print(f"Missing title for {post_url}")
-            return None
-        title = title_element.text.strip()
-        print(title_element)
+        # print date and commentary
+        print("Date: " + date)
+        print("Title: " + title)
 
         # Extract the content
         article_element = soup.find('article')
@@ -217,9 +213,16 @@ def crawl_blog(blog_url, years, json_file=DEFAULT_JSON_FILE):
             all_content = json.load(file)
     else:
         for year in years:
+            print(f"Crawling {blog_url} for {year}...")
             year_data = {"year": year, "months": []}
 
-            for month in range(1, 12):
+            for month in range(1, 13):
+                # make a request to check if the month exists and does not return 404, if so, continue
+                month_url = f"{blog_url}/{year}/{str(month).zfill(2)}"
+                response = requests.get(month_url)
+                if response.status_code == 404:
+                    print(f"Month {month} does not exist for {year}. Skipping...")
+                    continue
                 print(f"Crawling {blog_url} for {year}/{month:02}...")
                 month_data = crawl_blog_month(blog_url, year, month)
                 year_data["months"].append(month_data)
@@ -238,7 +241,6 @@ def generate_pdfs_in_parallel(content):
         
         # Enviar la tarea para cada año.
         for year_data in content:
-            print(year_data['year'])
             year = year_data['year']
             futures.append(executor.submit(generate_pdf_with_weasyprint, year_data, year))
         
@@ -247,9 +249,14 @@ def generate_pdfs_in_parallel(content):
             future.result()
 
 if __name__ == "__main__":
-    # Ask for input
     BLOG_URL = input("Enter the blog URL: ")
     YEARS = [int(year) for year in input("Enter years range (comma-separated): ").split(",")]
+    YEARS.sort()
+    POPULATE_YEARS_IN_BETWEEN = input("Do you want to populate years in between? (y/n): ")
+    if POPULATE_YEARS_IN_BETWEEN.lower() == "y":
+        YEARS = [year for year in range(YEARS[0], YEARS[-1] + 1)]
+    else:
+        YEARS = YEARS
 
     # Crawl the blog and generate PDFs
     blog_content = crawl_blog(BLOG_URL, YEARS)
