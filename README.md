@@ -52,9 +52,23 @@ pip install -r requirements.txt
 
 ## Blog format
 
-The format of the blog posts is expected to be the same for all years. The script will scrape the blog page for each year and extract the necessary information for each post.
+### URL Format sample:
 
-Format sample:
+The blog posts follow a consistent URL format across all years. Each URL is structured hierarchically to organize posts by year, month, pagination (if applicable), and individual post titles. Here's the breakdown:
+
+- **Base URL**: The base URL of the blog, e.g., `https://www.test.com/`.
+- **Year**: The year of the blog post, e.g., `2024`.
+- **Month**: The month of the blog post, e.g., `12`.
+- **Pagination**: Optional pagination for multiple posts in a single month, e.g., `page/2/`.
+- **Title**: The title of the blog post, e.g., `post-title`.
+
+For example, the URL for a blog post on March 20, 2003, is `https://www.test.com/2024/12/post-title`.
+
+Or in the case of pagination, `https://www.test.com/2024/12/page/2/post-title`.
+
+### HTML Format sample:
+
+The format of the blog posts is expected to be the same. The script will scrape the blog page for each year and month and extract the necessary information for each post (title, date, and content).
 
 ```html
 <article class="post">
