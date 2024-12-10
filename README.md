@@ -1,4 +1,4 @@
-# Blog Scraper and PDF Generator
+# Blog Scraper and PDF Generator script
 
 ## Overview
 
