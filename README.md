@@ -76,11 +76,11 @@ The format of the blog posts is expected to be the same. The script will scrape 
     <h1 class="entry-title">Blog Post Title</h1>
     <div class="entry-meta">
       <span class="screen-reader-text">Posted on</span>
-      <a href="https://www.test.com/2003/03/post-title" rel="bookmark"
+      <a href="https://www.test.com/2024/12/post-title" rel="bookmark"
         ><time
           class="entry-date published updated"
-          datetime="2003-03-20T12:44:12+09:00"
-          >March 20, 2003</time
+          datetime="2024-12-20T12:44:12+09:00"
+          >December 20, 2024</time
         ></a
       >
     </div>
