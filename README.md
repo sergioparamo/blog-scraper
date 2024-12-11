@@ -62,7 +62,7 @@ The blog posts follow a consistent URL format across all years. Each URL is stru
 - **Pagination**: Optional pagination for multiple posts in a single month, e.g., `page/2/`.
 - **Title**: The title of the blog post, e.g., `post-title`.
 
-For example, the URL for a blog post on March 20, 2003, is `https://www.test.com/2024/12/post-title`.
+For example, the URL for a blog post on December 20, 2024, is `https://www.test.com/2024/12/post-title`.
 
 Or in the case of pagination, `https://www.test.com/2024/12/page/2/post-title`.
 
